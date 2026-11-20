@@ -80,7 +80,7 @@ function Stopped({ run }: { run: RunView }) {
   return (
     <div className="card p-4">
       <div className="mb-2 flex items-center gap-2 font-medium text-worse"><TriangleAlert size={16} />Stopped at {labelOf(step)}</div>
-      <p className="mb-3 rounded-md bg-worse-soft px-2.5 py-2 text-worse">{run.error}</p>
+      <p className="mb-3 break-words rounded-md bg-worse-soft px-2.5 py-2 text-worse">{run.error}</p>
       <p className="mb-3 text-[12px] text-muted">This error does not fix itself, so the run waits for you instead of retrying.</p>
       {step === 'match_po' && (
         <div className="mb-3">

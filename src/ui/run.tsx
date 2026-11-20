@@ -44,7 +44,7 @@ export function RunPage({ run }: { run: RunView }) {
         </ul>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="card overflow-hidden">
           <div className="border-b border-line px-4 py-2.5 text-[11.5px] font-medium uppercase tracking-wide text-faint">Steps</div>
           <ol>
@@ -105,9 +105,9 @@ function stateText(state: string, all: AttemptView[], last?: AttemptView) {
 }
 
 function Attempts({ attempts }: { attempts: AttemptView[] }) {
-  if (attempts.length === 0) return <p className="px-4 pb-4 pl-[60px] text-faint">This step has not run.</p>;
+  if (attempts.length === 0) return <p className="px-4 pb-4 text-faint sm:pl-[60px]">This step has not run.</p>;
   return (
-    <div className="space-y-3 px-4 pb-4 pl-[60px]">
+    <div className="space-y-3 px-4 pb-4 sm:pl-[60px]">
       {attempts.map((a) => (
         <div key={a.attempt} className={`rounded-lg border border-line bg-panel-2 ${a.invalidated ? 'opacity-50' : ''}`}>
           <div className="flex flex-wrap items-center gap-2 border-b border-line px-3 py-2 text-[12px]">
@@ -118,10 +118,10 @@ function Attempts({ attempts }: { attempts: AttemptView[] }) {
             {a.invalidated && <span className="rounded bg-hover px-1 text-[10.5px] text-muted">set aside by a retry</span>}
             <span className="ml-auto text-faint">{duration(a)}</span>
           </div>
-          <div className="grid grid-cols-1 gap-3 p-3 lg:grid-cols-2">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-3 p-3 lg:grid-cols-2">
             {a.error && <div className="flex gap-2 rounded-md bg-worse-soft px-2.5 py-1.5 text-worse lg:col-span-2">{a.error}</div>}
-            <div><div className="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-faint">Input</div><Json value={a.input} /></div>
-            <div><div className="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-faint">Output</div>{a.output != null ? <Json value={a.output} /> : <p className="text-faint">None</p>}</div>
+            <div className="min-w-0"><div className="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-faint">Input</div><Json value={a.input} /></div>
+            <div className="min-w-0"><div className="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-faint">Output</div>{a.output != null ? <Json value={a.output} /> : <p className="text-faint">None</p>}</div>
           </div>
         </div>
       ))}
