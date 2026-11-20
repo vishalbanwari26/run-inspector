@@ -9,3 +9,4 @@ next-env.d.ts
 .next-static/
 *.swp
 brag-output/
+*.tsbuildinfo
