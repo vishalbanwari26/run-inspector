@@ -25,6 +25,9 @@ describe('nextAction', () => {
   it('stops after the last attempt even if transient', () => {
     expect(nextAction('transient', RETRY.maxAttempts)).toEqual({ stop: true });
   });
+  it('never retries an unknown outcome', () => {
+    expect(nextAction('unknown', 1)).toEqual({ stop: true });
+  });
   it('stops at once for permanent errors', () => {
     expect(nextAction(classify(new Error('Vendor account blocked')), 1)).toEqual({ stop: true });
   });

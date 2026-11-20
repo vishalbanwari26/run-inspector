@@ -10,6 +10,10 @@ export type StepResult = { status: StepStatus; output?: unknown; error?: string;
 export interface StepStore {
   /** Latest attempt of this step that a "retry from here" has not made stale. */
   lastValid(runId: string, key: string): Promise<StepRecord | null>;
+  /** Every attempt of this step that a retry has not set aside, oldest first. */
+  attempts(runId: string, key: string): Promise<StepRecord[]>;
+  /** Sets aside every attempt of these steps, so they run again from scratch. */
+  invalidate(runId: string, keys: string[]): Promise<void>;
   /** Records a new attempt as running and returns its number (1, 2, 3...). */
   start(runId: string, key: string, input: unknown): Promise<number>;
   finish(runId: string, key: string, attempt: number, result: StepResult): Promise<void>;

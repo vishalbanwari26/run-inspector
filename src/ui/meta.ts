@@ -12,7 +12,7 @@ export const STEPS: { key: string; label: string; kind: string; icon: LucideIcon
 ];
 export const labelOf = (key: string | null) => STEPS.find((s) => s.key === key)?.label ?? key ?? '';
 
-export type StepState = 'pending' | 'running' | 'done' | 'failed' | 'waiting' | 'retrying';
+export type StepState = 'pending' | 'running' | 'done' | 'failed' | 'waiting' | 'retrying' | 'unknown';
 
 export function valid(attempts: AttemptView[] | undefined) {
   return (attempts ?? []).filter((a) => !a.invalidated);
@@ -21,18 +21,23 @@ export function valid(attempts: AttemptView[] | undefined) {
 export function stepState(run: RunView, key: string): StepState {
   const last = valid(run.steps[key]).at(-1);
   if (!last) return 'pending';
+  if (last.status === 'failed' && last.errorKind === 'unknown') return 'unknown';
   if (last.status === 'failed' && run.status === 'running' && run.currentStep === key) return 'retrying';
   return last.status;
 }
 
-export type RunTone = 'running' | 'waiting' | 'failed' | 'booked' | 'rejected';
-export function runTone(run: Pick<RunView, 'status' | 'outcome'>): RunTone {
+export type RunTone = 'running' | 'waiting' | 'check' | 'failed' | 'booked' | 'rejected';
+export const needsCheck = (run: RunView) =>
+  run.status === 'failed' && !!run.currentStep && valid(run.steps[run.currentStep]).at(-1)?.errorKind === 'unknown';
+export function runTone(run: RunView): RunTone {
+  if (needsCheck(run)) return 'check';
   if (run.status === 'done') return (run.outcome as { result?: string } | null)?.result === 'rejected' ? 'rejected' : 'booked';
   return run.status;
 }
 export const RUN_TONE: Record<RunTone, { label: string; cls: string }> = {
   running: { label: 'Running', cls: 'text-accent bg-accent-soft' },
   waiting: { label: 'Waiting for you', cls: 'text-unclear bg-unclear-soft' },
+  check: { label: 'Check needed', cls: 'text-unclear bg-unclear-soft' },
   failed: { label: 'Stopped, needs you', cls: 'text-worse bg-worse-soft' },
   booked: { label: 'Booked', cls: 'text-better bg-better-soft' },
   rejected: { label: 'Rejected', cls: 'text-same bg-same-soft' },
@@ -53,7 +58,10 @@ export function story(run: RunView): string[] {
     const failed = v.filter((a) => a.status === 'failed');
     const last = v.at(-1);
     const reused = (last?.output as { reused?: boolean } | null)?.reused;
-    if (failed.length && last?.status === 'done')
+    const checkedBy = (last?.output as { checkedBy?: string } | null)?.checkedBy;
+    if (checkedBy)
+      out.push(`${s.label}: the outcome was unknown, so the run stopped. ${checkedBy} checked and it had gone out, so it was not sent again.`);
+    else if (failed.length && last?.status === 'done')
       out.push(`${s.label}: ${failed.map((f) => f.error?.replace(/\s*\(injected.*?\)/, '')).join('; ')}. Done on attempt ${last.attempt}${reused ? `, which found the earlier ${s.key === 'notify' ? 'message' : 'booking'} and did not repeat it` : ''}.`);
     if (all.some((a) => a.invalidated))
       out.push(`${s.label}: ${all.filter((a) => a.invalidated).length} earlier result(s) set aside by a retry.`);
@@ -62,7 +70,8 @@ export function story(run: RunView): string[] {
     const ask = valid(run.steps['approve']).at(-1)?.input as { reasons?: string[] } | undefined;
     out.push(`Waiting for approval: ${ask?.reasons?.join(', ') ?? 'needs a person'}.`);
   }
-  if (run.status === 'failed') out.push(`Stopped at ${labelOf(run.currentStep)}: ${run.error}`);
+  if (needsCheck(run)) out.push(`${labelOf(run.currentStep)}: the call timed out after the message was handed over. It may have gone out, and this system cannot be checked, so the run stopped instead of sending again.`);
+  else if (run.status === 'failed') out.push(`Stopped at ${labelOf(run.currentStep)}: ${run.error}`);
   if (run.status === 'done') {
     const o = run.outcome as { result: string; bookingId?: string; by?: string; note?: string };
     out.push(o.result === 'booked' ? `Booked once in the ERP and the requester was told.` : `Rejected by ${o.by}: ${o.note}`);

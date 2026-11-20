@@ -11,6 +11,13 @@ export class PrismaStepStore implements StepStore {
     const r = await this.db.stepRun.findFirst({ where: { runId, key, invalidated: false }, orderBy: { attempt: 'desc' } });
     return r && { key: r.key, attempt: r.attempt, status: r.status, output: r.output ?? undefined, error: r.error ?? undefined, errorKind: (r.errorKind as StepRecord['errorKind']) ?? undefined };
   }
+  async attempts(runId: string, key: string): Promise<StepRecord[]> {
+    const rows = await this.db.stepRun.findMany({ where: { runId, key, invalidated: false }, orderBy: { attempt: 'asc' } });
+    return rows.map((r) => ({ key: r.key, attempt: r.attempt, status: r.status, output: r.output ?? undefined, error: r.error ?? undefined, errorKind: (r.errorKind as StepRecord['errorKind']) ?? undefined }));
+  }
+  async invalidate(runId: string, keys: string[]) {
+    await this.db.stepRun.updateMany({ where: { runId, key: { in: keys } }, data: { invalidated: true } });
+  }
   async start(runId: string, key: string, input: unknown) {
     const last = await this.db.stepRun.findFirst({ where: { runId, key }, orderBy: { attempt: 'desc' }, select: { attempt: true } });
     const attempt = (last?.attempt ?? 0) + 1;

@@ -16,9 +16,11 @@ export type Faults = {
   erpTimeoutAfterCommit?: boolean;
   /** notify fails permanently on attempt 1. */
   notifyFailsOnce?: boolean;
+  /** The mail server sends the message, then the response times out (attempt 1). */
+  mailTimeoutAfterSend?: boolean;
 };
 
-export type Scenario = { title: string; text: string; faults?: Faults; then?: 'approve' | 'reject' | 'fix-po' | 'leave' };
+export type Scenario = { title: string; text: string; faults?: Faults; then?: 'approve' | 'reject' | 'fix-po' | 'confirm-sent' | 'leave' };
 
 const invoice = (vendor: string, no: string, po: string, requester: string, lines: [string, number][], total?: number) =>
   [
@@ -41,6 +43,8 @@ export const SCENARIOS: Scenario[] = [
   { title: 'ERP times out after booking', text: invoice('Halden Catering', 'HC-3391', 'PO-4474', 'marco.bell@brightmoor.example', [['Team lunch, 30 people', 525.0], ['Coffee and snacks', 120.0]]), faults: { erpTimeoutAfterCommit: true } },
   { title: 'Model rate limited twice', text: invoice('Vossberg Print & Media', 'VPM-5520', 'PO-4475', 'jonas.weber@brightmoor.example', [['Brochures, 2,000 copies', 1650.0], ['Roll-up banners, 2 pcs', 500.0]]), faults: { rateLimit: 2 } },
   { title: 'Requester mailbox not found', text: invoice('Altmark Cleaning Co.', 'ACC-0417', 'PO-4476', 'priya.nair@brightmoor.example', [['Office cleaning, November', 980.0]]), faults: { notifyFailsOnce: true }, then: 'leave' },
+  { title: 'Mail server times out after sending', text: invoice('Halden Catering', 'HC-3402', 'PO-4474', 'marco.bell@brightmoor.example', [['Team lunch, 30 people', 525.0], ['Coffee and snacks', 120.0]]), faults: { mailTimeoutAfterSend: true }, then: 'leave' },
+  { title: 'Mail timeout, checked by a person', text: invoice('Altmark Cleaning Co.', 'ACC-0418', 'PO-4476', 'priya.nair@brightmoor.example', [['Office cleaning, December', 980.0]]), faults: { mailTimeoutAfterSend: true }, then: 'confirm-sent' },
   { title: 'Approved after review', text: invoice('Kessler Facility Services', 'KFS-11874', 'PO-4472', 'tom.reyes@brightmoor.example', [['HVAC maintenance Q4', 5400.0], ['Fire safety inspection', 2520.0]]), then: 'approve' },
   { title: 'Rejected as a duplicate', text: invoice('Kessler Facility Services', 'KFS-11873-B', 'PO-4472', 'tom.reyes@brightmoor.example', [['HVAC maintenance Q4', 5400.0], ['Fire safety inspection', 2520.0]]), then: 'reject' },
   { title: 'Lines do not add up', text: invoice('Nordlicht Office Supplies GmbH', 'NL-2026-0951', 'PO-4471', 'lena.hoff@brightmoor.example', [['Printer paper A4, 40 boxes', 684.5], ['Toner cartridges, 6 pcs', 600.0]], 1384.5), then: 'leave' },

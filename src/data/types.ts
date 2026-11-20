@@ -9,7 +9,7 @@ export type AttemptView = {
   input: unknown;
   output: unknown;
   error: string | null;
-  errorKind: 'transient' | 'permanent' | null;
+  errorKind: 'transient' | 'permanent' | 'unknown' | null;
   invalidated: boolean;
   startedAt: string;
   endedAt: string | null;

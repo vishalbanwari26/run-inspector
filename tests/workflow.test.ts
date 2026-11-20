@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { advance, type Engine } from '@/engine/advance';
 import { MemoryRuns } from '@/engine/memory';
 import { MemoryStore } from '@/core/memory-store';
-import { decide } from '@/core/human';
+import { decide, resolveUnknown } from '@/core/human';
 import { invoiceWorkflow, type InvoiceInput } from '@/workflow/invoice';
 import { MemoryErp } from '@/workflow/erp';
 import { PURCHASE_ORDERS } from '../fixtures/invoices';
@@ -71,5 +71,19 @@ describe('invoice workflow through the engine', () => {
     s.runs.add('r', { text: 'x' });
     expect(await advance(s.e, 'r')).toBe('failed');
     expect(s.erp.bookings).toHaveLength(0);
+  });
+});
+
+describe('a mail server that cannot be checked', () => {
+  it('stops as unknown after a timeout, and continues without resending once a person confirms', async () => {
+    const s = setup();
+    s.runs.add('r', { text: 'x', faults: { mailTimeoutAfterSend: true } });
+    expect(await advance(s.e, 'r')).toBe('failed');
+    expect((await s.store.lastValid('r', 'notify'))?.errorKind).toBe('unknown');
+    expect(s.scheduled).toHaveLength(0);
+    await resolveUnknown(s.store, 'r', 'notify', { happened: true, by: 'Mara', note: 'In the sent folder' });
+    expect(await advance(s.e, 'r')).toBe('done');
+    expect(s.erp.messages).toHaveLength(1);
+    expect(s.erp.bookings).toHaveLength(1);
   });
 });

@@ -66,7 +66,7 @@ export function RunPage({ run }: { run: RunView }) {
                       <span className="flex flex-wrap items-center gap-2">
                         <span className="font-medium">{i + 1}. {s.label}</span>
                         <span className={`rounded px-1.5 text-[10.5px] font-medium ${s.effect ? 'bg-worse-soft text-worse' : 'bg-hover text-muted'}`}>{s.kind}</span>
-                        {reused && <span className="rounded bg-better-soft px-1.5 text-[10.5px] font-medium text-better">found earlier result, not repeated</span>}
+                        {reused && <span className="rounded bg-better-soft px-1.5 text-[10.5px] font-medium text-better">{(last?.output as { checkedBy?: string }).checkedBy ? 'checked by a person, not sent again' : 'found earlier result, not repeated'}</span>}
                       </span>
                       <span className="block text-[12px] text-faint">{stateText(state, all, last)}</span>
                     </span>
@@ -95,6 +95,7 @@ export function RunPage({ run }: { run: RunView }) {
 function stateText(state: string, all: AttemptView[], last?: AttemptView) {
   if (state === 'pending') return all.length ? 'Set aside by a retry, will run again' : 'Not reached yet';
   if (state === 'waiting') return 'Waiting for a person';
+  if (state === 'unknown') return 'Outcome unknown: a person has to check';
   if (state === 'retrying') return `Attempt ${last?.attempt} failed, retrying automatically`;
   if (state === 'failed') return `Stopped: ${last?.error ?? ''}`;
   if (state === 'running') return 'Running';
@@ -113,8 +114,8 @@ function Attempts({ attempts }: { attempts: AttemptView[] }) {
           <div className="flex flex-wrap items-center gap-2 border-b border-line px-3 py-2 text-[12px]">
             <span className="font-medium">Attempt {a.attempt}</span>
             <span className={a.status === 'done' ? 'text-better' : a.status === 'failed' ? 'text-worse' : a.status === 'waiting' ? 'text-unclear' : 'text-accent'}>{a.status}</span>
-            {a.errorKind && <span className={`rounded px-1 text-[10.5px] font-medium ${a.errorKind === 'transient' ? 'bg-accent-soft text-accent' : 'bg-worse-soft text-worse'}`}>
-              {a.errorKind === 'transient' ? <><RotateCw size={9} className="mr-0.5 inline" />transient, retried</> : 'permanent, stopped'}</span>}
+            {a.errorKind && <span className={`rounded px-1 text-[10.5px] font-medium ${a.errorKind === 'transient' ? 'bg-accent-soft text-accent' : a.errorKind === 'unknown' ? 'bg-unclear-soft text-unclear' : 'bg-worse-soft text-worse'}`}>
+              {a.errorKind === 'transient' ? <><RotateCw size={9} className="mr-0.5 inline" />transient, retried</> : a.errorKind === 'unknown' ? 'outcome unknown, stopped' : 'permanent, stopped'}</span>}
             {a.invalidated && <span className="rounded bg-hover px-1 text-[10.5px] text-muted">set aside by a retry</span>}
             <span className="ml-auto text-faint">{duration(a)}</span>
           </div>
@@ -148,7 +149,7 @@ function Effects({ run }: { run: RunView }) {
           ))}
         </ul>
       )}
-      <p className="border-t border-line px-4 py-2 text-[11.5px] text-faint">Every write carries a reference from the run and step. Before writing, the step looks for it, so a retry never writes twice.</p>
+      <p className="border-t border-line px-4 py-2 text-[11.5px] text-faint">Every write carries a reference from the run and step. Bookings are looked up by it before writing, so a retry never books twice. The mail server cannot be searched, so an unclear send stops for a person instead of sending again.</p>
     </div>
   );
 }

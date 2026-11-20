@@ -37,6 +37,10 @@ export type WorkflowDeps = {
 
 const cents = (n: number) => Math.round(n * 100);
 const attemptOf = async (d: WorkflowDeps, runId: string, key: string) => (await d.store.lastValid(runId, key))?.attempt ?? 1;
+// An earlier attempt of this step may have done the work: it was left running
+// by a crash, or it ended with an unknown outcome. The last attempt is the current one.
+const triedBefore = async (d: WorkflowDeps, runId: string, key: string) =>
+  (await d.store.attempts(runId, key)).slice(0, -1).some((a) => a.status === 'running' || a.errorKind === 'unknown');
 
 export async function invoiceWorkflow(runId: string, input: InvoiceInput, d: WorkflowDeps): Promise<Outcome> {
   const faults = input.faults ?? {};
@@ -92,15 +96,23 @@ export async function invoiceWorkflow(runId: string, input: InvoiceInput, d: Wor
         return b;
       },
     };
-    return d.naiveEffects ? { result: await target.perform(ref), reused: false } : once(target, ref);
+    return d.naiveEffects ? { result: await target.perform(ref), reused: false } : once(target, ref, await triedBefore(d, runId, 'post_invoice'));
   });
 
   const text = `Invoice ${fields.invoiceNumber} from ${fields.vendor} (${fields.total.toFixed(2)} ${fields.currency}) is booked as ${booking.result.id}.`;
+  // The mail server cannot be searched by our reference and does not drop repeats.
   const message = await runStep(d.store, runId, 'notify', { to: fields.requester, text }, async () => {
     const ref = effectRef(runId, 'notify');
-    if (faults.notifyFailsOnce && (await attemptOf(d, runId, 'notify')) === 1) throw permanent(`Mailbox ${fields.requester} not found.`);
-    const target = { find: (r: string) => d.erp.findMessage(r), perform: (r: string) => d.erp.send(r, fields.requester, text) };
-    return d.naiveEffects ? { result: await target.perform(ref), reused: false } : once(target, ref);
+    const attempt = await attemptOf(d, runId, 'notify');
+    if (faults.notifyFailsOnce && attempt === 1) throw permanent(`Mailbox ${fields.requester} not found.`);
+    const target = {
+      perform: async (r: string) => {
+        const m = await d.erp.send(r, fields.requester, text);
+        if (faults.mailTimeoutAfterSend && attempt === 1) throw transient('Mail server timeout after 30 s (injected; the message was sent)');
+        return m;
+      },
+    };
+    return d.naiveEffects ? { result: await target.perform(ref), reused: false } : once(target, ref, await triedBefore(d, runId, 'notify'));
   });
 
   return { result: 'booked', bookingId: booking.result.id, messageId: message.result.id };

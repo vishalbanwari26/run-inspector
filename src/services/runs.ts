@@ -3,10 +3,11 @@
 import type { Prisma, PrismaClient } from '@prisma/client';
 import type { Queue } from 'bullmq';
 import { advance, type Engine } from '@/engine/advance';
-import { decide, type Decision } from '@/core/human';
+import { decide, resolveUnknown, type Decision, type OutcomeCheck } from '@/core/human';
 import { retryPlan } from '@/core/retry';
 import type { RunJob } from '@/lib/queue';
 import { invoiceWorkflow, PLAN, type InvoiceInput } from '@/workflow/invoice';
+import { happenedSteps } from '@/workflow/plan';
 import { PrismaErp } from '@/workflow/erp';
 import { PrismaRunRepo, PrismaStepStore } from './prisma-store';
 
@@ -47,7 +48,10 @@ export async function decideRun(db: PrismaClient, queue: Queue<RunJob>, runId: s
 export async function retryRun(db: PrismaClient, queue: Queue<RunJob>, runId: string, from: string, edit?: { poNumber: string }) {
   const run = await db.run.findUniqueOrThrow({ where: { id: runId } });
   if (run.status === 'running') return { ok: false as const, reason: 'The run is still running.' };
-  const done = new Set((await db.stepRun.findMany({ where: { runId, status: 'done', invalidated: false }, select: { key: true } })).map((s) => s.key));
+  const rows = await db.stepRun.findMany({ where: { runId, invalidated: false }, orderBy: { attempt: 'asc' } });
+  const latest: Record<string, { status: string; errorKind: string | null }> = {};
+  for (const r of rows) latest[r.key] = { status: r.status, errorKind: r.errorKind };
+  const done = happenedSteps(latest);
   const plan = retryPlan(PLAN, done, from);
   if (!plan.ok) return plan;
   const input = run.input as InvoiceInput;
@@ -56,6 +60,16 @@ export async function retryRun(db: PrismaClient, queue: Queue<RunJob>, runId: st
     db.stepRun.updateMany({ where: { runId, key: { in: plan.invalidate } }, data: { invalidated: true } }),
     db.run.update({ where: { id: runId }, data: { status: 'running', error: null, input: next as Prisma.InputJsonValue } }),
   ]);
+  await queue.add('advance', { runId });
+  return { ok: true as const };
+}
+
+export async function resolveRun(db: PrismaClient, queue: Queue<RunJob>, runId: string, c: OutcomeCheck) {
+  const run = await db.run.findUniqueOrThrow({ where: { id: runId } });
+  if (run.status !== 'failed' || !run.currentStep) return { ok: false as const, reason: 'This run is not waiting for a check.' };
+  const r = await resolveUnknown(new PrismaStepStore(db), runId, run.currentStep, c);
+  if (!r.ok) return r;
+  await db.run.update({ where: { id: runId }, data: { status: 'running', error: null } });
   await queue.add('advance', { runId });
   return { ok: true as const };
 }

@@ -4,7 +4,7 @@
 // waiting or stopped so the inspector has something to show.
 import { createPrismaClient } from '@/lib/prisma';
 import { runQueue } from '@/lib/queue';
-import { decideRun, retryRun, startRun } from '@/services/runs';
+import { decideRun, resolveRun, retryRun, startRun } from '@/services/runs';
 import { PURCHASE_ORDERS, SCENARIOS } from '../fixtures/invoices';
 
 const db = createPrismaClient();
@@ -35,6 +35,7 @@ for (const r of started) {
   if (r.then === 'approve' && run.status === 'waiting') await decideRun(db, queue, r.id, { approved: true, by: 'Mara Lind', note: 'Matches the signed maintenance contract.' });
   if (r.then === 'reject' && run.status === 'waiting') await decideRun(db, queue, r.id, { approved: false, by: 'Mara Lind', note: 'Duplicate of KFS-11873, already in review.' });
   if (r.then === 'fix-po' && run.status === 'failed') await retryRun(db, queue, r.id, 'match_po', { poNumber: 'PO-4473' });
+  if (r.then === 'confirm-sent' && run.status === 'failed') await resolveRun(db, queue, r.id, { happened: true, by: 'Mara Lind', note: 'Found in the sent folder.' });
 }
 await sleep(1500);
 await settle();

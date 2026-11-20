@@ -1,7 +1,7 @@
 import type { RunView } from '@/data/types';
 import { RUN_TONE, STEPS, runTone, stepState, type StepState } from './meta';
 
-export function RunPill({ run }: { run: Pick<RunView, 'status' | 'outcome'> }) {
+export function RunPill({ run }: { run: RunView }) {
   const t = RUN_TONE[runTone(run)];
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11.5px] font-medium whitespace-nowrap ${t.cls}`}>
@@ -18,6 +18,7 @@ export const STATE_DOT: Record<StepState, string> = {
   done: 'bg-better',
   failed: 'bg-worse',
   waiting: 'bg-unclear',
+  unknown: 'bg-unclear',
 };
 
 export function StepDots({ run }: { run: RunView }) {

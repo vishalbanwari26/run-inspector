@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { decide, humanStep, WaitingForHuman } from '@/core/human';
+import { decide, humanStep, resolveUnknown, WaitingForHuman } from '@/core/human';
 import { runStep } from '@/core/step';
 import { MemoryStore } from '@/core/memory-store';
 
@@ -57,5 +57,30 @@ describe('decide', () => {
     const store = new MemoryStore();
     await humanStep(store, 'r', 'approve', ask).catch(() => {});
     expect(await decide(store, 'r', 'approve', { approved: false, by: 'Mara', note: 'no' })).toMatchObject({ ok: false });
+  });
+});
+
+describe('resolveUnknown', () => {
+  const unknownAttempt = async (store: MemoryStore) => {
+    const a = await store.start('r', 'notify', {});
+    await store.finish('r', 'notify', a, { status: 'failed', error: 'Mail server timeout', errorKind: 'unknown' });
+  };
+  it('marks the step done when a person confirms it happened', async () => {
+    const store = new MemoryStore();
+    await unknownAttempt(store);
+    expect(await resolveUnknown(store, 'r', 'notify', { happened: true, by: 'Mara', note: 'In the sent folder' })).toEqual({ ok: true, next: 'continue' });
+    expect((await store.lastValid('r', 'notify'))?.status).toBe('done');
+  });
+  it('sets the uncertain attempts aside when it did not happen', async () => {
+    const store = new MemoryStore();
+    await unknownAttempt(store);
+    expect(await resolveUnknown(store, 'r', 'notify', { happened: false, by: 'Mara', note: '' })).toEqual({ ok: true, next: 'retry' });
+    expect(await store.lastValid('r', 'notify')).toBeNull();
+  });
+  it('refuses when the outcome is not unknown', async () => {
+    const store = new MemoryStore();
+    const a = await store.start('r', 'notify', {});
+    await store.finish('r', 'notify', a, { status: 'failed', error: 'Mailbox not found', errorKind: 'permanent' });
+    expect((await resolveUnknown(store, 'r', 'notify', { happened: true, by: 'Mara', note: '' })).ok).toBe(false);
   });
 });

@@ -1,6 +1,6 @@
 [
  {
-  "id": "cmwpimfw40000k2bvimnlnx2n",
+  "id": "cmwplnpiv0000ivbv07a1jf4y",
   "title": "Office supplies, clean run",
   "workflow": "invoice-to-erp",
   "status": "done",
@@ -8,14 +8,14 @@
   "error": null,
   "outcome": {
    "result": "booked",
-   "bookingId": "cmwpimg930006jebvamvhm388",
-   "messageId": "cmwpimg9c0008jebv864hwyy4"
+   "bookingId": "cmwplnq330005i8bvvnns06iz",
+   "messageId": "cmwplnq3a0007i8bv0x8udv5a"
   },
   "text": "INVOICE NL-2026-0912\nFrom: Nordlicht Office Supplies GmbH\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4471\nRequested by: lena.hoff@brightmoor.example\n\nPrinter paper A4, 40 boxes      EUR   684.50\nToner cartridges, 6 pcs         EUR   600.00\n\nTOTAL                           EUR  1284.50",
   "faults": {},
   "overrides": {},
-  "createdAt": "2026-11-20T21:52:59.381Z",
-  "updatedAt": "2026-11-20T21:52:59.859Z",
+  "createdAt": "2026-11-20T23:17:57.367Z",
+  "updatedAt": "2026-11-20T23:17:58.105Z",
   "steps": {
    "extract": [
     {
@@ -45,8 +45,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:52:59.401Z",
-     "endedAt": "2026-11-20T21:52:59.803Z"
+     "startedAt": "2026-11-20T23:17:57.566Z",
+     "endedAt": "2026-11-20T23:17:58.064Z"
     }
    ],
    "check_totals": [
@@ -72,8 +72,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:52:59.816Z",
-     "endedAt": "2026-11-20T21:52:59.818Z"
+     "startedAt": "2026-11-20T23:17:58.072Z",
+     "endedAt": "2026-11-20T23:17:58.074Z"
     }
    ],
    "match_po": [
@@ -96,8 +96,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:52:59.823Z",
-     "endedAt": "2026-11-20T21:52:59.827Z"
+     "startedAt": "2026-11-20T23:17:58.077Z",
+     "endedAt": "2026-11-20T23:17:58.080Z"
     }
    ],
    "approve": [
@@ -112,8 +112,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:52:59.831Z",
-     "endedAt": "2026-11-20T21:52:59.833Z"
+     "startedAt": "2026-11-20T23:17:58.083Z",
+     "endedAt": "2026-11-20T23:17:58.084Z"
     }
    ],
    "post_invoice": [
@@ -129,18 +129,18 @@
      },
      "output": {
       "result": {
-       "id": "cmwpimg930006jebvamvhm388",
+       "id": "cmwplnq330005i8bvvnns06iz",
        "amount": 1284.5,
        "poNumber": "PO-4471",
-       "externalRef": "cmwpimfw40000k2bvimnlnx2n:post_invoice"
+       "externalRef": "cmwplnpiv0000ivbv07a1jf4y:post_invoice"
       },
       "reused": false
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:52:59.838Z",
-     "endedAt": "2026-11-20T21:52:59.849Z"
+     "startedAt": "2026-11-20T23:17:58.086Z",
+     "endedAt": "2026-11-20T23:17:58.096Z"
     }
    ],
    "notify": [
@@ -149,43 +149,43 @@
      "status": "done",
      "input": {
       "to": "lena.hoff@brightmoor.example",
-      "text": "Invoice NL-2026-0912 from Nordlicht Office Supplies GmbH (1284.50 EUR) is booked as cmwpimg930006jebvamvhm388."
+      "text": "Invoice NL-2026-0912 from Nordlicht Office Supplies GmbH (1284.50 EUR) is booked as cmwplnq330005i8bvvnns06iz."
      },
      "output": {
       "result": {
-       "id": "cmwpimg9c0008jebv864hwyy4",
+       "id": "cmwplnq3a0007i8bv0x8udv5a",
        "to": "lena.hoff@brightmoor.example",
-       "externalRef": "cmwpimfw40000k2bvimnlnx2n:notify"
+       "externalRef": "cmwplnpiv0000ivbv07a1jf4y:notify"
       },
       "reused": false
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:52:59.852Z",
-     "endedAt": "2026-11-20T21:52:59.857Z"
+     "startedAt": "2026-11-20T23:17:58.099Z",
+     "endedAt": "2026-11-20T23:17:58.104Z"
     }
    ]
   },
   "effects": [
    {
     "kind": "booking",
-    "id": "cmwpimg930006jebvamvhm388",
-    "externalRef": "cmwpimfw40000k2bvimnlnx2n:post_invoice",
+    "id": "cmwplnq330005i8bvvnns06iz",
+    "externalRef": "cmwplnpiv0000ivbv07a1jf4y:post_invoice",
     "summary": "NL-2026-0912 · 1284.50 EUR · PO-4471",
-    "createdAt": "2026-11-20T21:52:59.847Z"
+    "createdAt": "2026-11-20T23:17:58.095Z"
    },
    {
     "kind": "message",
-    "id": "cmwpimg9c0008jebv864hwyy4",
-    "externalRef": "cmwpimfw40000k2bvimnlnx2n:notify",
+    "id": "cmwplnq3a0007i8bv0x8udv5a",
+    "externalRef": "cmwplnpiv0000ivbv07a1jf4y:notify",
     "summary": "to lena.hoff@brightmoor.example",
-    "createdAt": "2026-11-20T21:52:59.856Z"
+    "createdAt": "2026-11-20T23:17:58.102Z"
    }
   ]
  },
  {
-  "id": "cmwpimh240001k2bvbk7ixp64",
+  "id": "cmwplnqp90001ivbvj62br9j1",
   "title": "Facility services over 5,000 EUR",
   "workflow": "invoice-to-erp",
   "status": "waiting",
@@ -195,8 +195,8 @@
   "text": "INVOICE KFS-11873\nFrom: Kessler Facility Services\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4472\nRequested by: tom.reyes@brightmoor.example\n\nHVAC maintenance Q4             EUR  5400.00\nFire safety inspection          EUR  2520.00\n\nTOTAL                           EUR  7920.00",
   "faults": {},
   "overrides": {},
-  "createdAt": "2026-11-20T21:53:00.892Z",
-  "updatedAt": "2026-11-20T21:53:01.494Z",
+  "createdAt": "2026-11-20T23:17:58.893Z",
+  "updatedAt": "2026-11-20T23:17:59.232Z",
   "steps": {
    "extract": [
     {
@@ -226,8 +226,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:00.921Z",
-     "endedAt": "2026-11-20T21:53:01.281Z"
+     "startedAt": "2026-11-20T23:17:58.913Z",
+     "endedAt": "2026-11-20T23:17:59.174Z"
     }
    ],
    "check_totals": [
@@ -253,8 +253,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:01.298Z",
-     "endedAt": "2026-11-20T21:53:01.303Z"
+     "startedAt": "2026-11-20T23:17:59.185Z",
+     "endedAt": "2026-11-20T23:17:59.188Z"
     }
    ],
    "match_po": [
@@ -277,8 +277,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:01.312Z",
-     "endedAt": "2026-11-20T21:53:01.318Z"
+     "startedAt": "2026-11-20T23:17:59.193Z",
+     "endedAt": "2026-11-20T23:17:59.196Z"
     }
    ],
    "approve": [
@@ -299,7 +299,7 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:01.478Z",
+     "startedAt": "2026-11-20T23:17:59.226Z",
      "endedAt": null
     }
    ]
@@ -307,7 +307,7 @@
   "effects": []
  },
  {
-  "id": "cmwpimi870002k2bvf2ozbmd5",
+  "id": "cmwplnrv70002ivbvt2av3mda",
   "title": "Wrong purchase order number",
   "workflow": "invoice-to-erp",
   "status": "failed",
@@ -317,8 +317,8 @@
   "text": "INVOICE BL-7765\nFrom: Brightline IT Hardware\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4437\nRequested by: aisha.kanu@brightmoor.example\n\nDocking stations, 10 pcs        EUR  2190.00\nMonitors 27 inch, 4 pcs         EUR  1220.00\n\nTOTAL                           EUR  3410.00",
   "faults": {},
   "overrides": {},
-  "createdAt": "2026-11-20T21:53:02.407Z",
-  "updatedAt": "2026-11-20T21:53:02.874Z",
+  "createdAt": "2026-11-20T23:18:00.403Z",
+  "updatedAt": "2026-11-20T23:18:00.793Z",
   "steps": {
    "extract": [
     {
@@ -348,8 +348,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:02.425Z",
-     "endedAt": "2026-11-20T21:53:02.840Z"
+     "startedAt": "2026-11-20T23:18:00.427Z",
+     "endedAt": "2026-11-20T23:18:00.758Z"
     }
    ],
    "check_totals": [
@@ -375,8 +375,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:02.851Z",
-     "endedAt": "2026-11-20T21:53:02.855Z"
+     "startedAt": "2026-11-20T23:18:00.769Z",
+     "endedAt": "2026-11-20T23:18:00.772Z"
     }
    ],
    "match_po": [
@@ -390,15 +390,15 @@
      "error": "Purchase order PO-4437 not found in the ERP.",
      "errorKind": "permanent",
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:02.861Z",
-     "endedAt": "2026-11-20T21:53:02.864Z"
+     "startedAt": "2026-11-20T23:18:00.778Z",
+     "endedAt": "2026-11-20T23:18:00.782Z"
     }
    ]
   },
   "effects": []
  },
  {
-  "id": "cmwpimje70003k2bvoqwk2xff",
+  "id": "cmwplnt170003ivbvkoy6dqaq",
   "title": "Wrong PO, corrected by a person",
   "workflow": "invoice-to-erp",
   "status": "done",
@@ -406,8 +406,8 @@
   "error": null,
   "outcome": {
    "result": "booked",
-   "bookingId": "cmwpimrmu001mjebvv84fkfi0",
-   "messageId": "cmwpimrmz001ojebvduf9n6jk"
+   "bookingId": "cmwplo3mp0021i8bvxeols0vr",
+   "messageId": "cmwplo3n20023i8bvvaniu6pe"
   },
   "text": "INVOICE BL-7766\nFrom: Brightline IT Hardware\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4437\nRequested by: aisha.kanu@brightmoor.example\n\nDocking stations, 10 pcs        EUR  2190.00\nMonitors 27 inch, 4 pcs         EUR  1220.00\n\nTOTAL                           EUR  3410.00",
   "faults": {},
@@ -416,8 +416,8 @@
     "poNumber": "PO-4473"
    }
   },
-  "createdAt": "2026-11-20T21:53:03.919Z",
-  "updatedAt": "2026-11-20T21:53:14.607Z",
+  "createdAt": "2026-11-20T23:18:01.915Z",
+  "updatedAt": "2026-11-20T23:18:15.664Z",
   "steps": {
    "extract": [
     {
@@ -447,8 +447,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:03.942Z",
-     "endedAt": "2026-11-20T21:53:04.139Z"
+     "startedAt": "2026-11-20T23:18:01.937Z",
+     "endedAt": "2026-11-20T23:18:02.217Z"
     }
    ],
    "check_totals": [
@@ -474,8 +474,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:04.145Z",
-     "endedAt": "2026-11-20T21:53:04.147Z"
+     "startedAt": "2026-11-20T23:18:02.229Z",
+     "endedAt": "2026-11-20T23:18:02.233Z"
     }
    ],
    "match_po": [
@@ -489,8 +489,8 @@
      "error": "Purchase order PO-4437 not found in the ERP.",
      "errorKind": "permanent",
      "invalidated": true,
-     "startedAt": "2026-11-20T21:53:04.150Z",
-     "endedAt": "2026-11-20T21:53:04.152Z"
+     "startedAt": "2026-11-20T23:18:02.239Z",
+     "endedAt": "2026-11-20T23:18:02.243Z"
     },
     {
      "attempt": 2,
@@ -511,8 +511,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:14.579Z",
-     "endedAt": "2026-11-20T21:53:14.581Z"
+     "startedAt": "2026-11-20T23:18:15.628Z",
+     "endedAt": "2026-11-20T23:18:15.630Z"
     }
    ],
    "approve": [
@@ -527,8 +527,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:14.587Z",
-     "endedAt": "2026-11-20T21:53:14.590Z"
+     "startedAt": "2026-11-20T23:18:15.635Z",
+     "endedAt": "2026-11-20T23:18:15.636Z"
     }
    ],
    "post_invoice": [
@@ -544,18 +544,18 @@
      },
      "output": {
       "result": {
-       "id": "cmwpimrmu001mjebvv84fkfi0",
+       "id": "cmwplo3mp0021i8bvxeols0vr",
        "amount": 3410,
        "poNumber": "PO-4473",
-       "externalRef": "cmwpimje70003k2bvoqwk2xff:post_invoice"
+       "externalRef": "cmwplnt170003ivbvkoy6dqaq:post_invoice"
       },
       "reused": false
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:14.594Z",
-     "endedAt": "2026-11-20T21:53:14.599Z"
+     "startedAt": "2026-11-20T23:18:15.641Z",
+     "endedAt": "2026-11-20T23:18:15.655Z"
     }
    ],
    "notify": [
@@ -564,43 +564,43 @@
      "status": "done",
      "input": {
       "to": "aisha.kanu@brightmoor.example",
-      "text": "Invoice BL-7766 from Brightline IT Hardware (3410.00 EUR) is booked as cmwpimrmu001mjebvv84fkfi0."
+      "text": "Invoice BL-7766 from Brightline IT Hardware (3410.00 EUR) is booked as cmwplo3mp0021i8bvxeols0vr."
      },
      "output": {
       "result": {
-       "id": "cmwpimrmz001ojebvduf9n6jk",
+       "id": "cmwplo3n20023i8bvvaniu6pe",
        "to": "aisha.kanu@brightmoor.example",
-       "externalRef": "cmwpimje70003k2bvoqwk2xff:notify"
+       "externalRef": "cmwplnt170003ivbvkoy6dqaq:notify"
       },
       "reused": false
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:14.602Z",
-     "endedAt": "2026-11-20T21:53:14.605Z"
+     "startedAt": "2026-11-20T23:18:15.659Z",
+     "endedAt": "2026-11-20T23:18:15.663Z"
     }
    ]
   },
   "effects": [
    {
     "kind": "booking",
-    "id": "cmwpimrmu001mjebvv84fkfi0",
-    "externalRef": "cmwpimje70003k2bvoqwk2xff:post_invoice",
+    "id": "cmwplo3mp0021i8bvxeols0vr",
+    "externalRef": "cmwplnt170003ivbvkoy6dqaq:post_invoice",
     "summary": "BL-7766 · 3410.00 EUR · PO-4473",
-    "createdAt": "2026-11-20T21:53:14.598Z"
+    "createdAt": "2026-11-20T23:18:15.649Z"
    },
    {
     "kind": "message",
-    "id": "cmwpimrmz001ojebvduf9n6jk",
-    "externalRef": "cmwpimje70003k2bvoqwk2xff:notify",
+    "id": "cmwplo3n20023i8bvvaniu6pe",
+    "externalRef": "cmwplnt170003ivbvkoy6dqaq:notify",
     "summary": "to aisha.kanu@brightmoor.example",
-    "createdAt": "2026-11-20T21:53:14.603Z"
+    "createdAt": "2026-11-20T23:18:15.662Z"
    }
   ]
  },
  {
-  "id": "cmwpimkkc0004k2bvcs1ghpfj",
+  "id": "cmwplnu780004ivbvw7h3hkc1",
   "title": "ERP times out after booking",
   "workflow": "invoice-to-erp",
   "status": "done",
@@ -608,16 +608,16 @@
   "error": null,
   "outcome": {
    "result": "booked",
-   "bookingId": "cmwpiml19000ojebv3ycsy00p",
-   "messageId": "cmwpimmnq000sjebvatpwj1zo"
+   "bookingId": "cmwplnuen000ni8bvwu5s50fh",
+   "messageId": "cmwplnw0c000ri8bv7idpxh4v"
   },
   "text": "INVOICE HC-3391\nFrom: Halden Catering\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4474\nRequested by: marco.bell@brightmoor.example\n\nTeam lunch, 30 people           EUR   525.00\nCoffee and snacks               EUR   120.00\n\nTOTAL                           EUR   645.00",
   "faults": {
    "erpTimeoutAfterCommit": true
   },
   "overrides": {},
-  "createdAt": "2026-11-20T21:53:05.436Z",
-  "updatedAt": "2026-11-20T21:53:08.153Z",
+  "createdAt": "2026-11-20T23:18:03.428Z",
+  "updatedAt": "2026-11-20T23:18:05.775Z",
   "steps": {
    "extract": [
     {
@@ -647,8 +647,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:05.447Z",
-     "endedAt": "2026-11-20T21:53:06.003Z"
+     "startedAt": "2026-11-20T23:18:03.473Z",
+     "endedAt": "2026-11-20T23:18:03.657Z"
     }
    ],
    "check_totals": [
@@ -674,8 +674,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:06.014Z",
-     "endedAt": "2026-11-20T21:53:06.018Z"
+     "startedAt": "2026-11-20T23:18:03.667Z",
+     "endedAt": "2026-11-20T23:18:03.669Z"
     }
    ],
    "match_po": [
@@ -698,8 +698,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:06.028Z",
-     "endedAt": "2026-11-20T21:53:06.034Z"
+     "startedAt": "2026-11-20T23:18:03.674Z",
+     "endedAt": "2026-11-20T23:18:03.677Z"
     }
    ],
    "approve": [
@@ -714,8 +714,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:06.037Z",
-     "endedAt": "2026-11-20T21:53:06.038Z"
+     "startedAt": "2026-11-20T23:18:03.683Z",
+     "endedAt": "2026-11-20T23:18:03.685Z"
     }
    ],
    "post_invoice": [
@@ -733,8 +733,8 @@
      "error": "ERP timeout after 30 s (injected; the booking was saved)",
      "errorKind": "transient",
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:06.041Z",
-     "endedAt": "2026-11-20T21:53:06.047Z"
+     "startedAt": "2026-11-20T23:18:03.689Z",
+     "endedAt": "2026-11-20T23:18:03.697Z"
     },
     {
      "attempt": 2,
@@ -748,18 +748,18 @@
      },
      "output": {
       "result": {
-       "id": "cmwpiml19000ojebv3ycsy00p",
+       "id": "cmwplnuen000ni8bvwu5s50fh",
        "amount": 645,
        "poNumber": "PO-4474",
-       "externalRef": "cmwpimkkc0004k2bvcs1ghpfj:post_invoice"
+       "externalRef": "cmwplnu780004ivbvw7h3hkc1:post_invoice"
       },
       "reused": true
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:08.140Z",
-     "endedAt": "2026-11-20T21:53:08.144Z"
+     "startedAt": "2026-11-20T23:18:05.757Z",
+     "endedAt": "2026-11-20T23:18:05.763Z"
     }
    ],
    "notify": [
@@ -768,43 +768,43 @@
      "status": "done",
      "input": {
       "to": "marco.bell@brightmoor.example",
-      "text": "Invoice HC-3391 from Halden Catering (645.00 EUR) is booked as cmwpiml19000ojebv3ycsy00p."
+      "text": "Invoice HC-3391 from Halden Catering (645.00 EUR) is booked as cmwplnuen000ni8bvwu5s50fh."
      },
      "output": {
       "result": {
-       "id": "cmwpimmnq000sjebvatpwj1zo",
+       "id": "cmwplnw0c000ri8bv7idpxh4v",
        "to": "marco.bell@brightmoor.example",
-       "externalRef": "cmwpimkkc0004k2bvcs1ghpfj:notify"
+       "externalRef": "cmwplnu780004ivbvw7h3hkc1:notify"
       },
       "reused": false
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:08.147Z",
-     "endedAt": "2026-11-20T21:53:08.151Z"
+     "startedAt": "2026-11-20T23:18:05.767Z",
+     "endedAt": "2026-11-20T23:18:05.773Z"
     }
    ]
   },
   "effects": [
    {
     "kind": "booking",
-    "id": "cmwpiml19000ojebv3ycsy00p",
-    "externalRef": "cmwpimkkc0004k2bvcs1ghpfj:post_invoice",
+    "id": "cmwplnuen000ni8bvwu5s50fh",
+    "externalRef": "cmwplnu780004ivbvw7h3hkc1:post_invoice",
     "summary": "HC-3391 · 645.00 EUR · PO-4474",
-    "createdAt": "2026-11-20T21:53:06.045Z"
+    "createdAt": "2026-11-20T23:18:03.695Z"
    },
    {
     "kind": "message",
-    "id": "cmwpimmnq000sjebvatpwj1zo",
-    "externalRef": "cmwpimkkc0004k2bvcs1ghpfj:notify",
+    "id": "cmwplnw0c000ri8bv7idpxh4v",
+    "externalRef": "cmwplnu780004ivbvw7h3hkc1:notify",
     "summary": "to marco.bell@brightmoor.example",
-    "createdAt": "2026-11-20T21:53:08.150Z"
+    "createdAt": "2026-11-20T23:18:05.772Z"
    }
   ]
  },
  {
-  "id": "cmwpimlq60005k2bvbdj425di",
+  "id": "cmwplnvda0005ivbv73y894ic",
   "title": "Model rate limited twice",
   "workflow": "invoice-to-erp",
   "status": "done",
@@ -812,16 +812,16 @@
   "error": null,
   "outcome": {
    "result": "booked",
-   "bookingId": "cmwpimqua001gjebvvt8l0sur",
-   "messageId": "cmwpimquq001ijebvidcrj0ve"
+   "bookingId": "cmwplo0ov001pi8bvqtjrn6f7",
+   "messageId": "cmwplo0p1001ri8bvudhg8mtg"
   },
   "text": "INVOICE VPM-5520\nFrom: Vossberg Print & Media\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4475\nRequested by: jonas.weber@brightmoor.example\n\nBrochures, 2,000 copies         EUR  1650.00\nRoll-up banners, 2 pcs          EUR   500.00\n\nTOTAL                           EUR  2150.00",
   "faults": {
    "rateLimit": 2
   },
   "overrides": {},
-  "createdAt": "2026-11-20T21:53:06.942Z",
-  "updatedAt": "2026-11-20T21:53:13.588Z",
+  "createdAt": "2026-11-20T23:18:04.942Z",
+  "updatedAt": "2026-11-20T23:18:11.847Z",
   "steps": {
    "extract": [
     {
@@ -834,8 +834,8 @@
      "error": "model call failed: 429 rate limit (injected)",
      "errorKind": "transient",
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:06.980Z",
-     "endedAt": "2026-11-20T21:53:06.987Z"
+     "startedAt": "2026-11-20T23:18:05.024Z",
+     "endedAt": "2026-11-20T23:18:05.029Z"
     },
     {
      "attempt": 2,
@@ -847,8 +847,8 @@
      "error": "model call failed: 429 rate limit (injected)",
      "errorKind": "transient",
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:09.059Z",
-     "endedAt": "2026-11-20T21:53:09.061Z"
+     "startedAt": "2026-11-20T23:18:07.088Z",
+     "endedAt": "2026-11-20T23:18:07.091Z"
     },
     {
      "attempt": 3,
@@ -877,8 +877,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:13.120Z",
-     "endedAt": "2026-11-20T21:53:13.514Z"
+     "startedAt": "2026-11-20T23:18:11.167Z",
+     "endedAt": "2026-11-20T23:18:11.808Z"
     }
    ],
    "check_totals": [
@@ -904,8 +904,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:13.524Z",
-     "endedAt": "2026-11-20T21:53:13.526Z"
+     "startedAt": "2026-11-20T23:18:11.818Z",
+     "endedAt": "2026-11-20T23:18:11.820Z"
     }
    ],
    "match_po": [
@@ -928,8 +928,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:13.530Z",
-     "endedAt": "2026-11-20T21:53:13.538Z"
+     "startedAt": "2026-11-20T23:18:11.824Z",
+     "endedAt": "2026-11-20T23:18:11.826Z"
     }
    ],
    "approve": [
@@ -944,8 +944,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:13.546Z",
-     "endedAt": "2026-11-20T21:53:13.550Z"
+     "startedAt": "2026-11-20T23:18:11.828Z",
+     "endedAt": "2026-11-20T23:18:11.829Z"
     }
    ],
    "post_invoice": [
@@ -961,18 +961,18 @@
      },
      "output": {
       "result": {
-       "id": "cmwpimqua001gjebvvt8l0sur",
+       "id": "cmwplo0ov001pi8bvqtjrn6f7",
        "amount": 2150,
        "poNumber": "PO-4475",
-       "externalRef": "cmwpimlq60005k2bvbdj425di:post_invoice"
+       "externalRef": "cmwplnvda0005ivbv73y894ic:post_invoice"
       },
       "reused": false
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:13.560Z",
-     "endedAt": "2026-11-20T21:53:13.571Z"
+     "startedAt": "2026-11-20T23:18:11.831Z",
+     "endedAt": "2026-11-20T23:18:11.841Z"
     }
    ],
    "notify": [
@@ -981,43 +981,43 @@
      "status": "done",
      "input": {
       "to": "jonas.weber@brightmoor.example",
-      "text": "Invoice VPM-5520 from Vossberg Print & Media (2150.00 EUR) is booked as cmwpimqua001gjebvvt8l0sur."
+      "text": "Invoice VPM-5520 from Vossberg Print & Media (2150.00 EUR) is booked as cmwplo0ov001pi8bvqtjrn6f7."
      },
      "output": {
       "result": {
-       "id": "cmwpimquq001ijebvidcrj0ve",
+       "id": "cmwplo0p1001ri8bvudhg8mtg",
        "to": "jonas.weber@brightmoor.example",
-       "externalRef": "cmwpimlq60005k2bvbdj425di:notify"
+       "externalRef": "cmwplnvda0005ivbv73y894ic:notify"
       },
       "reused": false
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:13.579Z",
-     "endedAt": "2026-11-20T21:53:13.587Z"
+     "startedAt": "2026-11-20T23:18:11.843Z",
+     "endedAt": "2026-11-20T23:18:11.846Z"
     }
    ]
   },
   "effects": [
    {
     "kind": "booking",
-    "id": "cmwpimqua001gjebvvt8l0sur",
-    "externalRef": "cmwpimlq60005k2bvbdj425di:post_invoice",
+    "id": "cmwplo0ov001pi8bvqtjrn6f7",
+    "externalRef": "cmwplnvda0005ivbv73y894ic:post_invoice",
     "summary": "VPM-5520 · 2150.00 EUR · PO-4475",
-    "createdAt": "2026-11-20T21:53:13.570Z"
+    "createdAt": "2026-11-20T23:18:11.839Z"
    },
    {
     "kind": "message",
-    "id": "cmwpimquq001ijebvidcrj0ve",
-    "externalRef": "cmwpimlq60005k2bvbdj425di:notify",
+    "id": "cmwplo0p1001ri8bvudhg8mtg",
+    "externalRef": "cmwplnvda0005ivbv73y894ic:notify",
     "summary": "to jonas.weber@brightmoor.example",
-    "createdAt": "2026-11-20T21:53:13.586Z"
+    "createdAt": "2026-11-20T23:18:11.845Z"
    }
   ]
  },
  {
-  "id": "cmwpimmwa0006k2bvnv8hnc9h",
+  "id": "cmwplnwji0006ivbv9leyzwlp",
   "title": "Requester mailbox not found",
   "workflow": "invoice-to-erp",
   "status": "failed",
@@ -1029,8 +1029,8 @@
    "notifyFailsOnce": true
   },
   "overrides": {},
-  "createdAt": "2026-11-20T21:53:08.458Z",
-  "updatedAt": "2026-11-20T21:53:08.701Z",
+  "createdAt": "2026-11-20T23:18:06.462Z",
+  "updatedAt": "2026-11-20T23:18:06.988Z",
   "steps": {
    "extract": [
     {
@@ -1056,8 +1056,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:08.470Z",
-     "endedAt": "2026-11-20T21:53:08.672Z"
+     "startedAt": "2026-11-20T23:18:06.487Z",
+     "endedAt": "2026-11-20T23:18:06.938Z"
     }
    ],
    "check_totals": [
@@ -1079,8 +1079,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:08.679Z",
-     "endedAt": "2026-11-20T21:53:08.679Z"
+     "startedAt": "2026-11-20T23:18:06.949Z",
+     "endedAt": "2026-11-20T23:18:06.951Z"
     }
    ],
    "match_po": [
@@ -1103,8 +1103,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:08.683Z",
-     "endedAt": "2026-11-20T21:53:08.684Z"
+     "startedAt": "2026-11-20T23:18:06.957Z",
+     "endedAt": "2026-11-20T23:18:06.960Z"
     }
    ],
    "approve": [
@@ -1119,8 +1119,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:08.687Z",
-     "endedAt": "2026-11-20T21:53:08.687Z"
+     "startedAt": "2026-11-20T23:18:06.965Z",
+     "endedAt": "2026-11-20T23:18:06.967Z"
     }
    ],
    "post_invoice": [
@@ -1136,18 +1136,18 @@
      },
      "output": {
       "result": {
-       "id": "cmwpimn2t000yjebv2e1gwqbb",
+       "id": "cmwplnwxt000xi8bvly91edns",
        "amount": 980,
        "poNumber": "PO-4476",
-       "externalRef": "cmwpimmwa0006k2bvnv8hnc9h:post_invoice"
+       "externalRef": "cmwplnwji0006ivbv9leyzwlp:post_invoice"
       },
       "reused": false
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:08.690Z",
-     "endedAt": "2026-11-20T21:53:08.694Z"
+     "startedAt": "2026-11-20T23:18:06.971Z",
+     "endedAt": "2026-11-20T23:18:06.979Z"
     }
    ],
    "notify": [
@@ -1156,29 +1156,401 @@
      "status": "failed",
      "input": {
       "to": "priya.nair@brightmoor.example",
-      "text": "Invoice ACC-0417 from Altmark Cleaning Co. (980.00 EUR) is booked as cmwpimn2t000yjebv2e1gwqbb."
+      "text": "Invoice ACC-0417 from Altmark Cleaning Co. (980.00 EUR) is booked as cmwplnwxt000xi8bvly91edns."
      },
      "output": null,
      "error": "Mailbox priya.nair@brightmoor.example not found.",
      "errorKind": "permanent",
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:08.697Z",
-     "endedAt": "2026-11-20T21:53:08.699Z"
+     "startedAt": "2026-11-20T23:18:06.982Z",
+     "endedAt": "2026-11-20T23:18:06.985Z"
     }
    ]
   },
   "effects": [
    {
     "kind": "booking",
-    "id": "cmwpimn2t000yjebv2e1gwqbb",
-    "externalRef": "cmwpimmwa0006k2bvnv8hnc9h:post_invoice",
+    "id": "cmwplnwxt000xi8bvly91edns",
+    "externalRef": "cmwplnwji0006ivbv9leyzwlp:post_invoice",
     "summary": "ACC-0417 · 980.00 EUR · PO-4476",
-    "createdAt": "2026-11-20T21:53:08.693Z"
+    "createdAt": "2026-11-20T23:18:06.977Z"
    }
   ]
  },
  {
-  "id": "cmwpimo240007k2bvosu58erj",
+  "id": "cmwplnxpg0007ivbvyzoj7nfu",
+  "title": "Mail server times out after sending",
+  "workflow": "invoice-to-erp",
+  "status": "failed",
+  "currentStep": "notify",
+  "error": "Mail server timeout after 30 s (injected; the message was sent). It may have gone through, and this system cannot be checked.",
+  "outcome": null,
+  "text": "INVOICE HC-3402\nFrom: Halden Catering\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4474\nRequested by: marco.bell@brightmoor.example\n\nTeam lunch, 30 people           EUR   525.00\nCoffee and snacks               EUR   120.00\n\nTOTAL                           EUR   645.00",
+  "faults": {
+   "mailTimeoutAfterSend": true
+  },
+  "overrides": {},
+  "createdAt": "2026-11-20T23:18:07.972Z",
+  "updatedAt": "2026-11-20T23:18:08.389Z",
+  "steps": {
+   "extract": [
+    {
+     "attempt": 1,
+     "status": "done",
+     "input": {
+      "text": "INVOICE HC-3402\nFrom: Halden Catering\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4474\nRequested by: marco.bell@brightmoor.example\n\nTeam lunch, 30 people           EUR   525.00\nCoffee and snacks               EUR   120.00\n\nTOTAL                           EUR   645.00"
+     },
+     "output": {
+      "lines": [
+       {
+        "amount": 525,
+        "description": "Team lunch, 30 people"
+       },
+       {
+        "amount": 120,
+        "description": "Coffee and snacks"
+       }
+      ],
+      "total": 645,
+      "vendor": "Halden Catering",
+      "currency": "EUR",
+      "poNumber": "PO-4474",
+      "requester": "marco.bell@brightmoor.example",
+      "invoiceNumber": "HC-3402"
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:07.995Z",
+     "endedAt": "2026-11-20T23:18:08.295Z"
+    }
+   ],
+   "check_totals": [
+    {
+     "attempt": 1,
+     "status": "done",
+     "input": {
+      "lines": [
+       {
+        "amount": 525,
+        "description": "Team lunch, 30 people"
+       },
+       {
+        "amount": 120,
+        "description": "Coffee and snacks"
+       }
+      ],
+      "total": 645
+     },
+     "output": {
+      "sum": 645
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:08.341Z",
+     "endedAt": "2026-11-20T23:18:08.344Z"
+    }
+   ],
+   "match_po": [
+    {
+     "attempt": 1,
+     "status": "done",
+     "input": {
+      "poNumber": "PO-4474"
+     },
+     "output": {
+      "po": {
+       "amount": 645,
+       "number": "PO-4474",
+       "vendor": "Halden Catering",
+       "currency": "EUR"
+      },
+      "sameAmount": true,
+      "sameVendor": true
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:08.350Z",
+     "endedAt": "2026-11-20T23:18:08.354Z"
+    }
+   ],
+   "approve": [
+    {
+     "attempt": 1,
+     "status": "done",
+     "input": {},
+     "output": {
+      "auto": true,
+      "reason": "Under the limit and matches the purchase order."
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:08.358Z",
+     "endedAt": "2026-11-20T23:18:08.360Z"
+    }
+   ],
+   "post_invoice": [
+    {
+     "attempt": 1,
+     "status": "done",
+     "input": {
+      "amount": 645,
+      "vendor": "Halden Catering",
+      "currency": "EUR",
+      "poNumber": "PO-4474",
+      "invoiceNumber": "HC-3402"
+     },
+     "output": {
+      "result": {
+       "id": "cmwplny0i0015i8bv7c4dy8rw",
+       "amount": 645,
+       "poNumber": "PO-4474",
+       "externalRef": "cmwplnxpg0007ivbvyzoj7nfu:post_invoice"
+      },
+      "reused": false
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:08.364Z",
+     "endedAt": "2026-11-20T23:18:08.372Z"
+    }
+   ],
+   "notify": [
+    {
+     "attempt": 1,
+     "status": "failed",
+     "input": {
+      "to": "marco.bell@brightmoor.example",
+      "text": "Invoice HC-3402 from Halden Catering (645.00 EUR) is booked as cmwplny0i0015i8bv7c4dy8rw."
+     },
+     "output": null,
+     "error": "Mail server timeout after 30 s (injected; the message was sent). It may have gone through, and this system cannot be checked.",
+     "errorKind": "unknown",
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:08.376Z",
+     "endedAt": "2026-11-20T23:18:08.380Z"
+    }
+   ]
+  },
+  "effects": [
+   {
+    "kind": "booking",
+    "id": "cmwplny0i0015i8bv7c4dy8rw",
+    "externalRef": "cmwplnxpg0007ivbvyzoj7nfu:post_invoice",
+    "summary": "HC-3402 · 645.00 EUR · PO-4474",
+    "createdAt": "2026-11-20T23:18:08.370Z"
+   },
+   {
+    "kind": "message",
+    "id": "cmwplny0r0017i8bvonkj3pxy",
+    "externalRef": "cmwplnxpg0007ivbvyzoj7nfu:notify",
+    "summary": "to marco.bell@brightmoor.example",
+    "createdAt": "2026-11-20T23:18:08.379Z"
+   }
+  ]
+ },
+ {
+  "id": "cmwplnyvf0008ivbvk0okrt9q",
+  "title": "Mail timeout, checked by a person",
+  "workflow": "invoice-to-erp",
+  "status": "done",
+  "currentStep": null,
+  "error": null,
+  "outcome": {
+   "result": "booked",
+   "bookingId": "cmwplnz8k001di8bvhwrepqdu",
+   "messageId": "checked by Mara Lind"
+  },
+  "text": "INVOICE ACC-0418\nFrom: Altmark Cleaning Co.\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4476\nRequested by: priya.nair@brightmoor.example\n\nOffice cleaning, December       EUR   980.00\n\nTOTAL                           EUR   980.00",
+  "faults": {
+   "mailTimeoutAfterSend": true
+  },
+  "overrides": {},
+  "createdAt": "2026-11-20T23:18:09.484Z",
+  "updatedAt": "2026-11-20T23:18:15.669Z",
+  "steps": {
+   "extract": [
+    {
+     "attempt": 1,
+     "status": "done",
+     "input": {
+      "text": "INVOICE ACC-0418\nFrom: Altmark Cleaning Co.\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4476\nRequested by: priya.nair@brightmoor.example\n\nOffice cleaning, December       EUR   980.00\n\nTOTAL                           EUR   980.00"
+     },
+     "output": {
+      "lines": [
+       {
+        "amount": 980,
+        "description": "Office cleaning, December"
+       }
+      ],
+      "total": 980,
+      "vendor": "Altmark Cleaning Co.",
+      "currency": "EUR",
+      "poNumber": "PO-4476",
+      "requester": "priya.nair@brightmoor.example",
+      "invoiceNumber": "ACC-0418"
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:09.512Z",
+     "endedAt": "2026-11-20T23:18:09.935Z"
+    }
+   ],
+   "check_totals": [
+    {
+     "attempt": 1,
+     "status": "done",
+     "input": {
+      "lines": [
+       {
+        "amount": 980,
+        "description": "Office cleaning, December"
+       }
+      ],
+      "total": 980
+     },
+     "output": {
+      "sum": 980
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:09.940Z",
+     "endedAt": "2026-11-20T23:18:09.941Z"
+    }
+   ],
+   "match_po": [
+    {
+     "attempt": 1,
+     "status": "done",
+     "input": {
+      "poNumber": "PO-4476"
+     },
+     "output": {
+      "po": {
+       "amount": 980,
+       "number": "PO-4476",
+       "vendor": "Altmark Cleaning Co.",
+       "currency": "EUR"
+      },
+      "sameAmount": true,
+      "sameVendor": true
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:09.945Z",
+     "endedAt": "2026-11-20T23:18:09.947Z"
+    }
+   ],
+   "approve": [
+    {
+     "attempt": 1,
+     "status": "done",
+     "input": {},
+     "output": {
+      "auto": true,
+      "reason": "Under the limit and matches the purchase order."
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:09.949Z",
+     "endedAt": "2026-11-20T23:18:09.950Z"
+    }
+   ],
+   "post_invoice": [
+    {
+     "attempt": 1,
+     "status": "done",
+     "input": {
+      "amount": 980,
+      "vendor": "Altmark Cleaning Co.",
+      "currency": "EUR",
+      "poNumber": "PO-4476",
+      "invoiceNumber": "ACC-0418"
+     },
+     "output": {
+      "result": {
+       "id": "cmwplnz8k001di8bvhwrepqdu",
+       "amount": 980,
+       "poNumber": "PO-4476",
+       "externalRef": "cmwplnyvf0008ivbvk0okrt9q:post_invoice"
+      },
+      "reused": false
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:09.953Z",
+     "endedAt": "2026-11-20T23:18:09.957Z"
+    }
+   ],
+   "notify": [
+    {
+     "attempt": 1,
+     "status": "failed",
+     "input": {
+      "to": "priya.nair@brightmoor.example",
+      "text": "Invoice ACC-0418 from Altmark Cleaning Co. (980.00 EUR) is booked as cmwplnz8k001di8bvhwrepqdu."
+     },
+     "output": null,
+     "error": "Mail server timeout after 30 s (injected; the message was sent). It may have gone through, and this system cannot be checked.",
+     "errorKind": "unknown",
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:09.959Z",
+     "endedAt": "2026-11-20T23:18:09.962Z"
+    },
+    {
+     "attempt": 2,
+     "status": "done",
+     "input": {
+      "check": {
+       "by": "Mara Lind",
+       "note": "Found in the sent folder.",
+       "happened": true
+      }
+     },
+     "output": {
+      "note": "Found in the sent folder.",
+      "result": {
+       "id": "checked by Mara Lind"
+      },
+      "reused": true,
+      "checkedBy": "Mara Lind"
+     },
+     "error": null,
+     "errorKind": null,
+     "invalidated": false,
+     "startedAt": "2026-11-20T23:18:15.630Z",
+     "endedAt": "2026-11-20T23:18:15.632Z"
+    }
+   ]
+  },
+  "effects": [
+   {
+    "kind": "booking",
+    "id": "cmwplnz8k001di8bvhwrepqdu",
+    "externalRef": "cmwplnyvf0008ivbvk0okrt9q:post_invoice",
+    "summary": "ACC-0418 · 980.00 EUR · PO-4476",
+    "createdAt": "2026-11-20T23:18:09.956Z"
+   },
+   {
+    "kind": "message",
+    "id": "cmwplnz8p001fi8bvwdrj0kfq",
+    "externalRef": "cmwplnyvf0008ivbvk0okrt9q:notify",
+    "summary": "to priya.nair@brightmoor.example",
+    "createdAt": "2026-11-20T23:18:09.961Z"
+   }
+  ]
+ },
+ {
+  "id": "cmwplo01l0009ivbv2fffrqr9",
   "title": "Approved after review",
   "workflow": "invoice-to-erp",
   "status": "done",
@@ -1186,14 +1558,14 @@
   "error": null,
   "outcome": {
    "result": "booked",
-   "bookingId": "cmwpimrn5001qjebvxdcrczei",
-   "messageId": "cmwpimrnb001sjebvondgwuml"
+   "bookingId": "cmwplo3nk0025i8bvn02gyyqr",
+   "messageId": "cmwplo3np0027i8bvg7n7bmh0"
   },
   "text": "INVOICE KFS-11874\nFrom: Kessler Facility Services\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4472\nRequested by: tom.reyes@brightmoor.example\n\nHVAC maintenance Q4             EUR  5400.00\nFire safety inspection          EUR  2520.00\n\nTOTAL                           EUR  7920.00",
   "faults": {},
   "overrides": {},
-  "createdAt": "2026-11-20T21:53:09.964Z",
-  "updatedAt": "2026-11-20T21:53:14.618Z",
+  "createdAt": "2026-11-20T23:18:11.001Z",
+  "updatedAt": "2026-11-20T23:18:15.687Z",
   "steps": {
    "extract": [
     {
@@ -1223,8 +1595,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:09.985Z",
-     "endedAt": "2026-11-20T21:53:10.176Z"
+     "startedAt": "2026-11-20T23:18:11.020Z",
+     "endedAt": "2026-11-20T23:18:11.460Z"
     }
    ],
    "check_totals": [
@@ -1250,8 +1622,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:10.182Z",
-     "endedAt": "2026-11-20T21:53:10.183Z"
+     "startedAt": "2026-11-20T23:18:11.471Z",
+     "endedAt": "2026-11-20T23:18:11.474Z"
     }
    ],
    "match_po": [
@@ -1274,8 +1646,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:10.188Z",
-     "endedAt": "2026-11-20T21:53:10.192Z"
+     "startedAt": "2026-11-20T23:18:11.479Z",
+     "endedAt": "2026-11-20T23:18:11.483Z"
     }
    ],
    "approve": [
@@ -1300,8 +1672,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:10.199Z",
-     "endedAt": "2026-11-20T21:53:14.578Z"
+     "startedAt": "2026-11-20T23:18:11.490Z",
+     "endedAt": "2026-11-20T23:18:15.642Z"
     }
    ],
    "post_invoice": [
@@ -1317,18 +1689,18 @@
      },
      "output": {
       "result": {
-       "id": "cmwpimrn5001qjebvxdcrczei",
+       "id": "cmwplo3nk0025i8bvn02gyyqr",
        "amount": 7920,
        "poNumber": "PO-4472",
-       "externalRef": "cmwpimo240007k2bvosu58erj:post_invoice"
+       "externalRef": "cmwplo01l0009ivbv2fffrqr9:post_invoice"
       },
       "reused": false
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:14.604Z",
-     "endedAt": "2026-11-20T21:53:14.611Z"
+     "startedAt": "2026-11-20T23:18:15.676Z",
+     "endedAt": "2026-11-20T23:18:15.681Z"
     }
    ],
    "notify": [
@@ -1337,43 +1709,43 @@
      "status": "done",
      "input": {
       "to": "tom.reyes@brightmoor.example",
-      "text": "Invoice KFS-11874 from Kessler Facility Services (7920.00 EUR) is booked as cmwpimrn5001qjebvxdcrczei."
+      "text": "Invoice KFS-11874 from Kessler Facility Services (7920.00 EUR) is booked as cmwplo3nk0025i8bvn02gyyqr."
      },
      "output": {
       "result": {
-       "id": "cmwpimrnb001sjebvondgwuml",
+       "id": "cmwplo3np0027i8bvg7n7bmh0",
        "to": "tom.reyes@brightmoor.example",
-       "externalRef": "cmwpimo240007k2bvosu58erj:notify"
+       "externalRef": "cmwplo01l0009ivbv2fffrqr9:notify"
       },
       "reused": false
      },
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:14.614Z",
-     "endedAt": "2026-11-20T21:53:14.616Z"
+     "startedAt": "2026-11-20T23:18:15.683Z",
+     "endedAt": "2026-11-20T23:18:15.686Z"
     }
    ]
   },
   "effects": [
    {
     "kind": "booking",
-    "id": "cmwpimrn5001qjebvxdcrczei",
-    "externalRef": "cmwpimo240007k2bvosu58erj:post_invoice",
+    "id": "cmwplo3nk0025i8bvn02gyyqr",
+    "externalRef": "cmwplo01l0009ivbv2fffrqr9:post_invoice",
     "summary": "KFS-11874 · 7920.00 EUR · PO-4472",
-    "createdAt": "2026-11-20T21:53:14.609Z"
+    "createdAt": "2026-11-20T23:18:15.680Z"
    },
    {
     "kind": "message",
-    "id": "cmwpimrnb001sjebvondgwuml",
-    "externalRef": "cmwpimo240007k2bvosu58erj:notify",
+    "id": "cmwplo3np0027i8bvg7n7bmh0",
+    "externalRef": "cmwplo01l0009ivbv2fffrqr9:notify",
     "summary": "to tom.reyes@brightmoor.example",
-    "createdAt": "2026-11-20T21:53:14.615Z"
+    "createdAt": "2026-11-20T23:18:15.685Z"
    }
   ]
  },
  {
-  "id": "cmwpimp860008k2bvb4ph6p55",
+  "id": "cmwplo17i000aivbvln6xfz76",
   "title": "Rejected as a duplicate",
   "workflow": "invoice-to-erp",
   "status": "done",
@@ -1387,8 +1759,8 @@
   "text": "INVOICE KFS-11873-B\nFrom: Kessler Facility Services\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4472\nRequested by: tom.reyes@brightmoor.example\n\nHVAC maintenance Q4             EUR  5400.00\nFire safety inspection          EUR  2520.00\n\nTOTAL                           EUR  7920.00",
   "faults": {},
   "overrides": {},
-  "createdAt": "2026-11-20T21:53:11.478Z",
-  "updatedAt": "2026-11-20T21:53:14.616Z",
+  "createdAt": "2026-11-20T23:18:12.510Z",
+  "updatedAt": "2026-11-20T23:18:15.679Z",
   "steps": {
    "extract": [
     {
@@ -1418,8 +1790,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:11.501Z",
-     "endedAt": "2026-11-20T21:53:11.924Z"
+     "startedAt": "2026-11-20T23:18:12.558Z",
+     "endedAt": "2026-11-20T23:18:12.914Z"
     }
    ],
    "check_totals": [
@@ -1445,8 +1817,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:11.932Z",
-     "endedAt": "2026-11-20T21:53:11.934Z"
+     "startedAt": "2026-11-20T23:18:12.924Z",
+     "endedAt": "2026-11-20T23:18:12.927Z"
     }
    ],
    "match_po": [
@@ -1469,8 +1841,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:11.938Z",
-     "endedAt": "2026-11-20T21:53:11.940Z"
+     "startedAt": "2026-11-20T23:18:12.937Z",
+     "endedAt": "2026-11-20T23:18:12.943Z"
     }
    ],
    "approve": [
@@ -1495,15 +1867,15 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:11.945Z",
-     "endedAt": "2026-11-20T21:53:14.590Z"
+     "startedAt": "2026-11-20T23:18:12.950Z",
+     "endedAt": "2026-11-20T23:18:15.653Z"
     }
    ]
   },
   "effects": []
  },
  {
-  "id": "cmwpimqe50009k2bv2gtkbzlf",
+  "id": "cmwplo2dv000bivbvrw7stdwz",
   "title": "Lines do not add up",
   "workflow": "invoice-to-erp",
   "status": "failed",
@@ -1513,8 +1885,8 @@
   "text": "INVOICE NL-2026-0951\nFrom: Nordlicht Office Supplies GmbH\nTo: Brightmoor GmbH, Accounts Payable\nYour order: PO-4471\nRequested by: lena.hoff@brightmoor.example\n\nPrinter paper A4, 40 boxes      EUR   684.50\nToner cartridges, 6 pcs         EUR   600.00\n\nTOTAL                           EUR  1384.50",
   "faults": {},
   "overrides": {},
-  "createdAt": "2026-11-20T21:53:12.989Z",
-  "updatedAt": "2026-11-20T21:53:13.339Z",
+  "createdAt": "2026-11-20T23:18:14.035Z",
+  "updatedAt": "2026-11-20T23:18:14.516Z",
   "steps": {
    "extract": [
     {
@@ -1544,8 +1916,8 @@
      "error": null,
      "errorKind": null,
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:13.008Z",
-     "endedAt": "2026-11-20T21:53:13.321Z"
+     "startedAt": "2026-11-20T23:18:14.062Z",
+     "endedAt": "2026-11-20T23:18:14.498Z"
     }
    ],
    "check_totals": [
@@ -1569,8 +1941,8 @@
      "error": "Lines add up to 1284.50, the invoice says 1384.50.",
      "errorKind": "permanent",
      "invalidated": false,
-     "startedAt": "2026-11-20T21:53:13.330Z",
-     "endedAt": "2026-11-20T21:53:13.332Z"
+     "startedAt": "2026-11-20T23:18:14.506Z",
+     "endedAt": "2026-11-20T23:18:14.510Z"
     }
    ]
   },

@@ -10,7 +10,7 @@ export default async function Home() {
   const runs = (await allRuns()).slice().reverse();
   const n = (t: string) => runs.filter((r) => runTone(r) === t).length;
   const tiles = [
-    { label: 'Waiting for you', n: n('waiting'), dot: 'bg-unclear', hint: 'A person has to approve or reject' },
+    { label: 'Waiting for you', n: n('waiting') + n('check'), dot: 'bg-unclear', hint: 'Approve, reject, or check an outcome' },
     { label: 'Stopped', n: n('failed'), dot: 'bg-worse', hint: 'Retrying alone would not help' },
     { label: 'Running', n: n('running'), dot: 'bg-accent', hint: 'Including automatic retries' },
     { label: 'Finished', n: n('booked') + n('rejected'), dot: 'bg-better', hint: 'Booked or rejected' },

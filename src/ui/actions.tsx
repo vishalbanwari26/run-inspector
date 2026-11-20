@@ -5,8 +5,8 @@ import { Ban, Check, Loader2, RotateCw, ShieldCheck, TriangleAlert, X } from 'lu
 import type { RunView } from '@/data/types';
 import { retryPlan } from '@/core/retry';
 import { MIN_REJECT_NOTE } from '@/core/human';
-import { PLAN } from '@/workflow/plan';
-import { labelOf, STEPS, valid } from './meta';
+import { PLAN, happenedSteps } from '@/workflow/plan';
+import { labelOf, needsCheck, STEPS, valid } from './meta';
 
 const isStatic = process.env['NEXT_PUBLIC_STATIC'] === '1';
 
@@ -29,6 +29,7 @@ function useAction(runId: string) {
 
 export function Actions({ run }: { run: RunView }) {
   if (run.status === 'waiting') return <Approval run={run} />;
+  if (needsCheck(run)) return <OutcomeCheck run={run} />;
   if (run.status === 'failed') return <Stopped run={run} />;
   if (run.status === 'running') return (
     <div className="card flex items-center gap-2 p-4 text-muted"><Loader2 size={15} className="animate-spin" />Running {labelOf(run.currentStep)}{run.error ? `, retrying after: ${run.error}` : ''}</div>
@@ -72,7 +73,7 @@ function Approval({ run }: { run: RunView }) {
 
 function Stopped({ run }: { run: RunView }) {
   const step = run.currentStep ?? '';
-  const done = new Set(STEPS.filter((s) => valid(run.steps[s.key]).at(-1)?.status === 'done').map((s) => s.key));
+  const done = happenedSteps(Object.fromEntries(STEPS.map((s) => [s.key, valid(run.steps[s.key]).at(-1)])));
   const here = retryPlan(PLAN, done, step);
   const [po, setPo] = useState('');
   const { busy, msg, post } = useAction(run.id);
@@ -98,6 +99,29 @@ function Stopped({ run }: { run: RunView }) {
         <RotateCw size={13} />Retry {labelOf(step)}
       </button>
       {earlier.length > 0 && <EarlierSteps done={done} earlier={earlier} />}
+      <Msg msg={msg} />
+    </div>
+  );
+}
+
+function OutcomeCheck({ run }: { run: RunView }) {
+  const step = run.currentStep ?? '';
+  const { busy, msg, post } = useAction(run.id);
+  const input = valid(run.steps[step]).at(-1)?.input as { to?: string } | undefined;
+  return (
+    <div className="card p-4">
+      <div className="mb-2 flex items-center gap-2 font-medium text-unclear"><TriangleAlert size={16} />Outcome unknown at {labelOf(step)}</div>
+      <p className="mb-3 break-words rounded-md bg-unclear-soft px-2.5 py-2 text-unclear">{run.error}</p>
+      <p className="mb-3 text-[12px] text-muted">
+        The mail server cannot be searched for this message and does not drop repeats, so trying again could send it twice. The run stopped instead.
+        Check {input?.to ? <span className="font-mono text-[11.5px] text-fg">{input.to}</span> : 'the mailbox'} or the sent folder, then tell the run what happened.
+      </p>
+      <div className="grid grid-cols-1 gap-2">
+        <button disabled={busy} onClick={() => post('outcome', { happened: true, note: 'Found in the sent folder' }, 'mark the step done and continue without sending again')}
+          className="rounded-lg bg-accent px-3 py-2 font-medium text-white hover:brightness-110 disabled:opacity-40">It went out, mark done</button>
+        <button disabled={busy} onClick={() => post('outcome', { happened: false, note: '' }, 'set the uncertain attempt aside and send the message')}
+          className="rounded-lg border border-line-strong px-3 py-2 font-medium hover:bg-hover disabled:opacity-40">It did not go out, send it</button>
+      </div>
       <Msg msg={msg} />
     </div>
   );

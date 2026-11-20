@@ -9,7 +9,8 @@ import { writeFileSync } from 'node:fs';
 import { advance, type Engine } from '@/engine/advance';
 import { MemoryRuns } from '@/engine/memory';
 import { MemoryStore } from '@/core/memory-store';
-import { decide } from '@/core/human';
+import { decide, resolveUnknown } from '@/core/human';
+import { happenedSteps } from '@/workflow/plan';
 import { retryPlan } from '@/core/retry';
 import type { StepResult } from '@/core/step';
 import { invoiceWorkflow, PLAN, type InvoiceInput } from '@/workflow/invoice';
@@ -62,6 +63,7 @@ async function trial(naive: boolean) {
       rateLimit: random() < 0.25 ? 1 + Math.floor(random() * 3) : 0,
       erpTimeoutAfterCommit: random() < 0.25,
       notifyFailsOnce: random() < 0.15,
+      mailTimeoutAfterSend: random() < 0.2,
     };
     const id = `run-${i}`;
     ids.push(id);
@@ -89,7 +91,7 @@ async function trial(naive: boolean) {
   };
 
   // The operator: approve or reject waiting runs, fix wrong PO numbers, retry failed messages.
-  let operatorActions = 0;
+  let operatorActions = 0, unknownOutcomes = 0, checkedSent = 0, checkedNotSent = 0;
   for (let round = 0; round < 10; round++) {
     await drain();
     let acted = false;
@@ -99,8 +101,17 @@ async function trial(naive: boolean) {
         const reject = (run.input as InvoiceInput).text.includes('KFS-11873-B');
         await decide(store, id, 'approve', reject ? { approved: false, by: 'operator', note: 'Duplicate of KFS-11873' } : { approved: true, by: 'operator', note: '' });
         queue.push({ runId: id, at: now }); acted = true; operatorActions++;
+      } else if (run.status === 'failed' && run.currentStep && (await store.lastValid(id, run.currentStep))?.errorKind === 'unknown') {
+        // The person checks the mailbox: did the message for this reference go out?
+        const happened = erp.messages.some((m) => m.externalRef === `${id}:${run.currentStep}`);
+        await resolveUnknown(store, id, run.currentStep, { happened, by: 'operator', note: '' });
+        unknownOutcomes++; if (happened) checkedSent++; else checkedNotSent++;
+        run.status = 'running';
+        queue.push({ runId: id, at: now }); acted = true; operatorActions++;
       } else if (run.status === 'failed' && (run.currentStep === 'match_po' || run.currentStep === 'notify')) {
-        const done = new Set(store.rows.filter((r) => r.runId === id && r.status === 'done' && !r.invalidated).map((r) => r.key));
+        const latest: Record<string, { status: string; errorKind?: string | null }> = {};
+        for (const r of store.rows) if (r.runId === id && !r.invalidated) latest[r.key] = r;
+        const done = happenedSteps(latest);
         const plan = retryPlan(PLAN, done, run.currentStep);
         if (!plan.ok) continue;
         for (const r of store.rows) if (r.runId === id && plan.invalidate.includes(r.key)) r.invalidated = true;
@@ -119,7 +130,7 @@ async function trial(naive: boolean) {
   const dupBookings = [...count(erp.bookings, (b) => b.externalRef).values()].filter((n) => n > 1).reduce((s, n) => s + n - 1, 0);
   const dupMessages = [...count(erp.messages, (m) => m.externalRef).values()].filter((n) => n > 1).reduce((s, n) => s + n - 1, 0);
   const states = count([...runs.runs.values()], (r) => r.status === 'done' ? `done (${(r.outcome as { result: string }).result})` : `${r.status}${r.currentStep ? ` at ${r.currentStep}` : ''}`);
-  return { naive, runs: N, crashes, crashesAt, retriesScheduled, operatorActions, modelCalls, bookings: erp.bookings.length, dupBookings, messages: erp.messages.length, dupMessages, states: Object.fromEntries([...states].sort()) };
+  return { naive, runs: N, crashes, crashesAt, unknownOutcomes, checkedSent, checkedNotSent, retriesScheduled, operatorActions, modelCalls, bookings: erp.bookings.length, dupBookings, messages: erp.messages.length, dupMessages, states: Object.fromEntries([...states].sort()) };
 }
 
 type Trial = Awaited<ReturnType<typeof trial>>;
@@ -129,17 +140,18 @@ const line = (r: Trial) => [
   `- bookings: ${r.bookings}, duplicate bookings: **${r.dupBookings}**`,
   `- messages: ${r.messages}, duplicate messages: **${r.dupMessages}**`,
   `- model calls: ${r.modelCalls} for ${r.runs} runs (${r.modelCalls - r.runs} repeated; crashes during extract: ${r.crashesAt['extract'] ?? 0})`,
+  `- unknown outcomes stopped for a person: ${r.unknownOutcomes} (had gone out: ${r.checkedSent}, had not: ${r.checkedNotSent})`,
 ].join('\n');
 const sections: string[] = [];
-const table = ['| Seed | Crashes | Booked | Rejected | Stopped (bad totals) | Duplicate bookings | Duplicate messages | Baseline duplicate bookings | Baseline duplicate messages |', '|---|---|---|---|---|---|---|---|---|'];
+const table = ['| Seed | Crashes | Booked | Rejected | Stopped (bad totals) | Unknown outcomes checked by a person | Duplicate bookings | Duplicate messages | Baseline duplicate bookings | Baseline duplicate messages |', '|---|---|---|---|---|---|---|---|---|---|'];
 for (const seed of SEEDS) {
   SEED = seed;
   const withRules = await trial(false);
   const baseline = await trial(true);
   const st = withRules.states as Record<string, number>;
-  table.push(`| ${seed} | ${withRules.crashes} | ${st['done (booked)'] ?? 0} | ${st['done (rejected)'] ?? 0} | ${st['failed at check_totals'] ?? 0} | **${withRules.dupBookings}** | **${withRules.dupMessages}** | ${baseline.dupBookings} | ${baseline.dupMessages} |`);
+  table.push(`| ${seed} | ${withRules.crashes} | ${st['done (booked)'] ?? 0} | ${st['done (rejected)'] ?? 0} | ${st['failed at check_totals'] ?? 0} | ${withRules.unknownOutcomes} | **${withRules.dupBookings}** | **${withRules.dupMessages}** | ${baseline.dupBookings} | ${baseline.dupMessages} |`);
   sections.push(`## Seed ${seed}\n\n### With the rules\n${line(withRules)}\n\n### Naive baseline (books and messages without asking first)\n${line(baseline)}\n`);
 }
-const report = `# Chaos test\n\n${N} runs per seed. Faults: model rate limits (25% of runs), ERP timeout after the booking was saved (25%), requester mailbox missing once (15%), a worker crash right after a step's work finished and before its result was saved (30%). A simulated operator approves, rejects, fixes the purchase order and retries until nothing moves.\n\n${table.join('\n')}\n\n${sections.join('\n')}`;
+const report = `# Chaos test\n\n${N} runs per seed. Faults: model rate limits (25% of runs), ERP timeout after the booking was saved (25%), requester mailbox missing once (15%), mail server timeout after the message was sent (20%), a worker crash right after a step's work finished and before its result was saved (30%). A simulated operator approves, rejects, fixes the purchase order and retries until nothing moves.\n\n${table.join('\n')}\n\n${sections.join('\n')}`;
 writeFileSync('eval/chaos-results.md', report);
 console.log(table.join('\n'));

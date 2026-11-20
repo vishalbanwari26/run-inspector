@@ -23,7 +23,7 @@ export async function loadRuns(id?: string): Promise<RunView[]> {
     for (const s of r.steps) {
       (steps[s.key] ??= []).push({
         attempt: s.attempt, status: s.status, input: s.input, output: s.output, error: s.error,
-        errorKind: (s.errorKind as 'transient' | 'permanent' | null) ?? null, invalidated: s.invalidated,
+        errorKind: (s.errorKind as 'transient' | 'permanent' | 'unknown' | null) ?? null, invalidated: s.invalidated,
         startedAt: s.startedAt.toISOString(), endedAt: s.endedAt?.toISOString() ?? null,
       });
     }
