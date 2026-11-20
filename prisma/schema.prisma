@@ -1,0 +1,107 @@
+// run-inspector: long-running agent workflows you can see into and fix.
+//
+// A Run is one execution of a workflow. Every attempt of every step is a
+// StepRun row, so the inspector can show the full history, including retries.
+// The fake ERP tables stand in for the business system the workflow writes to.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RunStatus {
+  running
+  waiting
+  failed
+  done
+}
+
+enum StepStatus {
+  running
+  done
+  failed
+  waiting
+}
+
+model Run {
+  id          String    @id @default(cuid())
+  workflow    String
+  title       String
+  input       Json
+  status      RunStatus @default(running)
+  /// The step the run is on, or stopped at.
+  currentStep String?
+  error       String?   @db.Text
+  /// What the run produced when it finished, e.g. the booking or a rejection.
+  outcome     Json?
+  steps       StepRun[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status])
+  @@map("runs")
+}
+
+model StepRun {
+  id          String     @id @default(cuid())
+  runId       String
+  run         Run        @relation(fields: [runId], references: [id])
+  key         String
+  attempt     Int
+  status      StepStatus
+  input       Json?
+  output      Json?
+  error       String?    @db.Text
+  /// 'transient' errors are retried automatically, 'permanent' ones stop for a person.
+  errorKind   String?
+  /// Set when a later "retry from here" made this result stale.
+  invalidated Boolean    @default(false)
+  startedAt   DateTime   @default(now())
+  endedAt     DateTime?
+
+  @@unique([runId, key, attempt])
+  @@index([runId, key])
+  @@map("step_runs")
+}
+
+// ---- the fake ERP the workflow talks to ----
+
+model PurchaseOrder {
+  number  String @id
+  vendor  String
+  amount  Decimal @db.Decimal(12, 2)
+  currency String
+
+  @@map("erp_purchase_orders")
+}
+
+/// A booked invoice. Like many real ERPs, it accepts duplicates: the external
+/// reference is searchable but not unique. Avoiding double bookings is the
+/// workflow's job, which is exactly what the chaos test checks.
+model ErpInvoice {
+  id             String   @id @default(cuid())
+  externalRef    String
+  vendor         String
+  invoiceNumber  String
+  amount         Decimal  @db.Decimal(12, 2)
+  currency       String
+  poNumber       String
+  createdAt      DateTime @default(now())
+
+  @@index([externalRef])
+  @@map("erp_invoices")
+}
+
+model ErpMessage {
+  id             String   @id @default(cuid())
+  externalRef    String
+  to             String
+  text           String   @db.Text
+  createdAt      DateTime @default(now())
+
+  @@index([externalRef])
+  @@map("erp_messages")
+}

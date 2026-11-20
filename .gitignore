@@ -1,0 +1,11 @@
+node_modules/
+.next/
+dist/
+.env
+*.log
+.DS_Store
+next-env.d.ts
+.claude/
+.next-static/
+*.swp
+brag-output/
